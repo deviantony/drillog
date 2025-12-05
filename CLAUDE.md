@@ -12,11 +12,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Code Style
 
 - Use Go standard formatting (`gofmt`)
-- Zero external dependencies - standard library only
+- Zero external dependencies for the library - standard library only
 - Keep the library as a single file (`drillog.go`)
 - Use unexported types for context keys to avoid collisions
 
 ## Architecture
+
+### Library (`drillog.go`)
 
 Single-file library built on Go's `log/slog`:
 
@@ -24,3 +26,7 @@ Single-file library built on Go's `log/slog`:
 - **Context propagation**: Span info stored via `context.WithValue`
 - **ID generation**: Pluggable `IDGenerator`, defaults to 8-char hex via `crypto/rand`
 - **Dual-mode logging**: When drillog Handler is set, it auto-injects span attributes. When using `slog.Default()`, convenience functions manually append them.
+
+### Viewer (`cmd/drillog`)
+
+Go CLI that parses log files and serves an interactive web UI. See @docs/viewer-architecture.md for details.
