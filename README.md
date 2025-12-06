@@ -16,7 +16,17 @@ Your App  →  Flat Log File  →  Tree Viewer
                with grep)        hierarchy)
 ```
 
-## Usage
+## Installation
+
+```bash
+# Library
+go get github.com/deviantony/drillog
+
+# Viewer CLI
+go install github.com/deviantony/drillog/cmd/drillog@latest
+```
+
+## Quick Start
 
 ```go
 package main
@@ -24,7 +34,6 @@ package main
 import (
     "context"
     "os"
-
     "github.com/deviantony/drillog"
 )
 
@@ -49,38 +58,45 @@ func processOrder(ctx context.Context, orderID int) {
 
 **Output:**
 ```
-2025-12-04T10:00:00Z INFO main started span=a1b2c3d4
-2025-12-04T10:00:00Z INFO starting span=a1b2c3d4
-2025-12-04T10:00:00Z INFO processOrder started span=e5f6a7b8 parent=a1b2c3d4
-2025-12-04T10:00:00Z INFO loading order order_id=12345 span=e5f6a7b8 parent=a1b2c3d4
-2025-12-04T10:00:00Z INFO processOrder completed duration=1.2ms span=e5f6a7b8 parent=a1b2c3d4
-2025-12-04T10:00:00Z INFO main completed duration=2.5ms span=a1b2c3d4
+time=2025-12-04T10:00:00Z level=INFO msg="main started" span=a1b2c3d4
+time=2025-12-04T10:00:00Z level=INFO msg="starting" span=a1b2c3d4
+time=2025-12-04T10:00:00Z level=INFO msg="processOrder started" span=e5f6a7b8 parent=a1b2c3d4
+time=2025-12-04T10:00:00Z level=INFO msg="loading order" order_id=12345 span=e5f6a7b8 parent=a1b2c3d4
+time=2025-12-04T10:00:00Z level=INFO msg="processOrder completed" duration=1.2ms span=e5f6a7b8 parent=a1b2c3d4
+time=2025-12-04T10:00:00Z level=INFO msg="main completed" duration=2.5ms span=a1b2c3d4
 ```
 
-**In the viewer:**
-```
-▼ main [2.5ms]
-  │ starting
-  ▼ processOrder [1.2ms]
-    │ loading order order_id=12345
-```
+## Viewer
 
-## Installation
+View logs as an interactive tree in your browser:
 
 ```bash
-go get github.com/deviantony/drillog
+# Run your app, capture logs
+go run ./myapp 2> app.log
+
+# Open viewer
+drillog view app.log
 ```
 
-## API
+The viewer auto-opens in your browser with:
+- Collapsible span tree
+- Search across messages and attributes
+- Level filters (DEBUG/INFO/WARN/ERROR)
+- Duration badges
 
-### Starting Spans
+**Flags:**
+- `-port 8080` - Use specific port
+- `-host 0.0.0.0` - Bind to all interfaces (for containers)
+- `--no-browser` - Don't auto-open browser
+
+## API Reference
+
+### Spans
 
 ```go
-ctx, end := drillog.Start(ctx, "operation name")
+ctx, end := drillog.Start(ctx, "operation")
 defer end()
 ```
-
-Nested calls automatically capture parent relationships.
 
 ### Logging
 
@@ -91,16 +107,10 @@ drillog.Warn(ctx, "message", "key", "value")
 drillog.Error(ctx, "message", "key", "value")
 ```
 
-Or use standard slog (if handler is configured):
-
-```go
-slog.InfoContext(ctx, "message", "key", "value")
-```
-
 ### Configuration
 
 ```go
-// Text output (human-readable)
+// Text output
 drillog.SetDefault(drillog.NewTextHandler(os.Stderr, nil))
 
 // JSON output
@@ -108,31 +118,21 @@ drillog.SetDefault(drillog.NewJSONHandler(os.Stderr, nil))
 
 // Wrap existing handler
 drillog.SetDefault(drillog.NewHandler(myHandler, nil))
-
-// Custom ID generator
-drillog.SetDefault(drillog.NewTextHandler(os.Stderr, &drillog.HandlerOptions{
-    IDGenerator: myIDFunc,
-}))
 ```
 
 ### Context Utilities
 
 ```go
-spanID := drillog.SpanID(ctx)     // current span ID
-parentID := drillog.ParentID(ctx) // parent span ID
+spanID := drillog.SpanID(ctx)
+parentID := drillog.ParentID(ctx)
 ```
 
 ## Design Principles
 
-- **Zero config works** - defaults to `slog.Default()`
+- **Zero external dependencies** - standard library only
 - **Context-first** - no logger objects to pass around
-- **Standard library only** - no external dependencies
 - **Logs stay flat** - works with grep, tail, existing tools
 - **Minimal API** - `Start()` + `defer end()` + log functions
-
-## Viewer
-
-Open `viewer.html` in any browser. Drag and drop your log file. See the tree.
 
 ## License
 

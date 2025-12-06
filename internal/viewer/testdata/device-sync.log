@@ -1,0 +1,25 @@
+time=2025-12-06T09:25:52.445Z level=INFO msg="sync-cycle started" span=52ee7731
+time=2025-12-06T09:25:52.445Z level=INFO msg="starting device sync" span=52ee7731
+time=2025-12-06T09:25:52.445Z level=INFO msg="fetch-agents started" span=a2ab89b7 parent=52ee7731
+time=2025-12-06T09:25:52.456Z level=INFO msg="agents retrieved" count=5 span=a2ab89b7 parent=52ee7731
+time=2025-12-06T09:25:52.457Z level=INFO msg="fetch-agents completed" duration=11ms span=a2ab89b7 parent=52ee7731
+time=2025-12-06T09:25:52.457Z level=INFO msg="process-device started" span=f0c32b84 parent=52ee7731
+time=2025-12-06T09:25:52.457Z level=INFO msg=processing device_id=device-001 span=f0c32b84 parent=52ee7731
+time=2025-12-06T09:25:52.462Z level=INFO msg="sync-data started" span=9e11a728 parent=f0c32b84
+time=2025-12-06T09:25:52.465Z level=INFO msg="sync-data completed" duration=3ms span=9e11a728 parent=f0c32b84
+time=2025-12-06T09:25:52.465Z level=INFO msg="device processed" device_id=device-001 span=f0c32b84 parent=52ee7731
+time=2025-12-06T09:25:52.465Z level=INFO msg="process-device completed" duration=8ms span=f0c32b84 parent=52ee7731
+time=2025-12-06T09:25:52.465Z level=INFO msg="process-device started" span=04ac07df parent=52ee7731
+time=2025-12-06T09:25:52.465Z level=INFO msg=processing device_id=device-002 span=04ac07df parent=52ee7731
+time=2025-12-06T09:25:52.471Z level=INFO msg="sync-data started" span=718fe687 parent=04ac07df
+time=2025-12-06T09:25:52.475Z level=INFO msg="sync-data completed" duration=4ms span=718fe687 parent=04ac07df
+time=2025-12-06T09:25:52.475Z level=INFO msg="device processed" device_id=device-002 span=04ac07df parent=52ee7731
+time=2025-12-06T09:25:52.475Z level=INFO msg="process-device completed" duration=10ms span=04ac07df parent=52ee7731
+time=2025-12-06T09:25:52.475Z level=INFO msg="process-device started" span=e49fab71 parent=52ee7731
+time=2025-12-06T09:25:52.475Z level=INFO msg=processing device_id=device-003 span=e49fab71 parent=52ee7731
+time=2025-12-06T09:25:52.482Z level=INFO msg="sync-data started" span=f8e34ca5 parent=e49fab71
+time=2025-12-06T09:25:52.486Z level=INFO msg="sync-data completed" duration=4ms span=f8e34ca5 parent=e49fab71
+time=2025-12-06T09:25:52.486Z level=INFO msg="device processed" device_id=device-003 span=e49fab71 parent=52ee7731
+time=2025-12-06T09:25:52.486Z level=INFO msg="process-device completed" duration=10ms span=e49fab71 parent=52ee7731
+time=2025-12-06T09:25:52.486Z level=INFO msg="sync complete" devices=3 span=52ee7731
+time=2025-12-06T09:25:52.486Z level=INFO msg="sync-cycle completed" duration=40ms span=52ee7731

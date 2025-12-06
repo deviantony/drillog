@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: theme('colors.terminal.bg');
+}
+
+::-webkit-scrollbar-thumb {
+  background: theme('colors.terminal.border');
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: theme('colors.terminal.muted');
+}
+
+/* Tree connector lines */
+.tree-line {
+  border-left: 1px solid theme('colors.terminal.border');
+}
